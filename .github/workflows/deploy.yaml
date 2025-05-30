@@ -1,0 +1,14 @@
+name: "Hola Mundo Deploy"
+on:
+  push:
+    branches: ["main"]
+jobs:
+  deploy-cris:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Code
+        run: echo "Pulling code from repository..."
+      - name: Deploy to Server
+        run: echo "Deploying to server..."
+      - name: Notify Deployment
+        run: echo "Deployment successful!"
