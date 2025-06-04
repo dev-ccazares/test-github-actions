@@ -31,7 +31,7 @@ jobs:
         run: echo "The variable from the first job is $my_variable"
   third-job:
     runs-on: ubuntu-latest
-    needs: [first-job, second-job]
+    needs: [first-job]
     steps:
       - name: Donwload log file
         uses: actions/download-artifact@v4
