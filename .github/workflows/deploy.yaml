@@ -21,4 +21,4 @@ jobs:
       my_variable: ${{ needs.first-job.outputs.my_variable }}
     steps:
       - name: Step 2
-        run: echo "The variable from the first job is ${{ env.my_variable }}"
+        run: echo "The variable from the first job is $my_variable"
