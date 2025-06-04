@@ -12,6 +12,13 @@ jobs:
       - name: Obtener variable
         id: get_variable
         run: echo "The variable is ${{ steps.step_1.outputs.my_variable }}"
+      - name: Generate file log
+        run: echo "Log file content" >> log.txt
+      - name: Upload log file
+        uses: actions/upload-artifact@v3
+        with:
+          name: log-test
+          path: log.txt
     outputs:
       my_variable: ${{ steps.step_1.outputs.my_variable }}
   second-job:
