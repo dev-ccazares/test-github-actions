@@ -15,7 +15,7 @@ jobs:
       - name: Generate file log
         run: echo "Log file content" >> log.txt
       - name: Upload log file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: log-test
           path: log.txt
