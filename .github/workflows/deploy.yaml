@@ -48,6 +48,4 @@ jobs:
       - name: Print message
         run: echo "Running on ${{ matrix.message }}"
       - name: Show OS information
-        run: echo 'Operating System Information: ${{ matrix.message }}'
-
-    
+        run: echo "Operating System Information - ${{ matrix.message }}"
