@@ -1,51 +1,40 @@
-name: "Hola Mundo Deploy"
+name: "Deploy"
 on:
   push:
     branches: ["main"]
 jobs:
-  first-job:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Step 1
-        id: step_1
-        run: echo "my_variable=Hola Mundo" >> $GITHUB_OUTPUT
-      - name: Obtener variable
-        id: get_variable
-        run: echo "The variable is ${{ steps.step_1.outputs.my_variable }}"
-      - name: Generate file log
-        run: echo "Log file content" >> log.txt
-      - name: Upload log file
-        uses: actions/upload-artifact@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          name: log-test
-          path: log.txt
-    outputs:
-      my_variable: ${{ steps.step_1.outputs.my_variable }}
-  second-job:
-    runs-on: ubuntu-latest
-    needs: first-job
-    env:
-      my_variable: ${{ needs.first-job.outputs.my_variable }}
-    steps:
-      - name: Step 2
-        run: echo "The variable from the first job is $my_variable"
-  third-job:
-    runs-on: ubuntu-latest
-    needs: [first-job]
-    steps:
-      - name: Donwload log file
-        uses: actions/download-artifact@v4
+          node-version: "18"
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - name: Build page
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: log-test
-      - name: Show log file content
-        run: cat log.txt
-  fourth-job:
+          path: public/
+  deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        message: [ubuntu-latest, windows-latest, macos-latest]
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment-pages.outputs.page_url }}
+
     steps:
-      - name: Print message
-        run: echo "Running on ${{ matrix.message }}"
-      - name: Show OS information
-        run: echo "Operating System Information - ${{ matrix.message }}"
+      - name: Deploy
+        id: deployment-pages
+        uses: actions/deploy-pages@v4
