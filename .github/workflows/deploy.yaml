@@ -1,7 +1,7 @@
 name: "Deploy"
 on:
   push:
-    branches: ["feature/first-cicd"]
+    branches: ["main"]
 jobs:
   build:
     runs-on: ubuntu-latest
