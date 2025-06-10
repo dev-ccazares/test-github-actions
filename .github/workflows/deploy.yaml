@@ -23,11 +23,18 @@ jobs:
         with:
           path: public/
   deploy:
-    runs-on: ubuntu-latest
     needs: build
+
+    permissions:
+      contents: write
+      pages: write
+
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/deploy-pages@v4
