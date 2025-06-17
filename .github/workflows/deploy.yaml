@@ -6,6 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Use my actions
+        uses: dev-ccazares/test-action-javascript@v1.0
+        with:
+          myInput: Mona the Octocat
       - name: Setup node
         uses: actions/setup-node@v4
         with:
